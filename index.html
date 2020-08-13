@@ -1,0 +1,316 @@
+<html>
+    <head>
+        Website-Resume
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-firestore.js"></script>
+        
+        <style>
+        /*color guide
+        almost black = #0b0c10 / 11, 12, 16
+        blue-ish grey = #1f2833 / 31, 40, 51
+        grey = #c5c6c7 /  197, 198, 199
+        bright teal = #66fcf1  /  102, 252, 241
+        dark teal = #45a29e  /  69, 162, 158
+        */
+
+        *, html, body {
+          padding: 0px;
+          margin: 0px;
+        }
+
+        body{
+            background-color: #0b0c10;
+        }
+        .bigcontainer{
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+        .headercontainer{
+            background-image: url("blackbg.jpg");
+            display:flex;
+            justify-content:flex-start;
+            align-items:center;
+            padding-top: 15px;
+            padding-left: 20px;
+            padding-bottom:10px;
+
+        }
+        .greeting{
+            font-family: 'Palatino Linotype';
+            /*font-weight: 300;*/
+            color:rgba(102, 252, 242, 1);
+            font-size:4.5em;
+
+            background-color: rgba(11, 12, 16, 0.678);
+            margin-left:30px;
+            padding-left:10px;
+            padding-right:10px;
+
+            border-radius: 10px;
+
+        }
+        .headingname#headingdetails{
+            color:#45a29e;
+            font-family: Garamond;
+            font-weight: 100;
+            font-size: 1em;
+        }
+        #pic{
+            border-radius:50%;
+            border:2px solid #45a29e;
+            max-height:200px;
+            flex-direction: column;
+            align-content: center;
+        }
+        .icontainer{
+            background-color: #0b0c10;
+            border-radius: 4px;
+            margin-left: 20px;
+        }
+        .icons a {
+
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            margin: 10px;
+            vertical-align: middle;
+            -o-transition: all .3s;
+            -moz-transition: all .3s;
+            -webkit-transition: all .3s;
+            -ms-transition: all .3s;
+        }
+        .icons a.twitter { background: url(twitter.png) left top no-repeat; }
+        .icons a.facebook { background: url(facebook.png) left top no-repeat; }
+        .icons a.github { background: url(github.png) left top no-repeat; }
+        .icons a:hover { background-position: left -34px; }
+
+        .menus{
+            background-color:#0b0c10;
+            width:100%;
+            height: 5vh;
+
+        }
+
+        .buttons{
+            background-color:#1f2833;
+            height: 100%;
+            font-weight: 500;
+            font-size:20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding-top: 1em;
+            padding-left: 7em;
+            padding-right: 7em;
+            border: 2px solid #45a29e;
+            color:rgb(15, 224, 172);
+            float:left;
+            border-radius:8px;
+        }
+        .buttons:hover{
+            color: rgb(15, 224, 172);
+                cursor: pointer;
+                background-color: rgba(11, 12, 16);
+                box-shadow: 0 2px 3px rgba(4, 120, 236, 0.2);
+               
+               
+        }
+
+        .details{
+            background-color:rgba(11, 12, 16, 0.678);
+            width:100%;
+            height:100%;
+            color:rgba(69, 162, 158, 1);
+            margin-top:20px;
+            text-align: center;
+        }
+        #edLi{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            font-size: 50px;
+            border-bottom: 2px solid rgba(69, 162, 158, 1);
+            margin-top: 20px;
+            padding-bottom: 50px;
+            
+        }
+        .labels{
+            font-size: 60px;
+            
+            padding-bottom: 2em;
+            padding-left: 1.5em;
+            padding-right: 1.5em;
+            padding-top: 1em;
+            background-color: black;
+        }
+        #educdata{
+            background-color:rgba(4, 120, 236, 0.2);
+            text-align: center;
+        }
+       
+        #degstyle{
+            color: rgba(197, 198, 199);
+        }
+        #orgLi{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            font-size: 50px;
+            border-bottom: 2px solid rgba(69, 162, 158, 1);
+            margin-top: 20px;
+            padding-bottom: 40px;
+            background-color: black;
+        }
+        #workdata{
+            background-color: rgba(11, 12, 16, 0.678);
+            
+        }
+        #workLi{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            font-size: 50px;
+            border-bottom: 2px solid rgba(69, 162, 158, 1);
+            margin-top: 20px;
+            padding-bottom: 50px;
+        }
+        #otherLi{
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            font-size: 50px;
+            margin-top: 20px;
+            padding-bottom: 50px;
+        }
+        #cross{
+            background-color: beige;
+            color:beige;
+        }
+        
+        .sticky {
+        position: fixed;
+        top: 0;
+        width: 100%
+        }
+
+        /* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
+        .sticky + .content {
+        padding-top: 102px;
+        }
+        #otherpic{
+            margin-top:50px;
+        }
+        
+        .linkto{
+            font-size: 40px;
+            color:white;
+        }
+        #deleting{
+            /* default for <button>, but useful for <a> */
+            display: inline-block;
+            text-align: center;
+            text-decoration: none;
+
+            /* create a small space when buttons wrap on 2 lines */
+            margin: 2px 0;
+
+            /* invisible border (will be colored on hover/focus) */
+            border: solid 1px transparent;
+            border-radius: 4px;
+
+            /* size comes from text & padding (no width/height) */
+            padding: 0.5em 1em;
+
+            /* make sure colors have enough contrast! */
+            color: #ffffff;
+            background-color: #b42a2a;
+        }
+        </style>
+    </head>
+    <body>
+        <div class="bigcontainer">
+        <div class="topcontainer" id="menudo">
+            <div class="headercontainer">
+
+                <img src="gem3.jpg" id="pic">
+                <div class="greeting" id="welcome_mess">
+                      Welcome to my website resume!
+                </div>
+                <div class="icontainer">
+                    <div class="icons">
+                        <a class="facebook" href="https://www.facebook.com/gemmac99" target="_blank"></a>
+                        <a class="twitter" href="https://twitter.com/McGemMac" target="_blank"></a>
+                        <a class="github" href="https://github.com/gemmac99" target="_blank"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="menus" id="menu">
+              <a class="educBut" href="#educdata"><span class="buttons">Education</span></a>  
+               <a class="orgBut" href="#orgdata"><span class="buttons">Organizations</span></a> 
+               <a class="workBut" href="#workdata"><span class="buttons">Works</span></a> 
+                <a class="otherBut" href="#otherdata"><span class="buttons">Others</span></a> 
+                <a class="resumeed" href="adddata.html" target="_blank"> <span class="buttons">Edit the resume</span></a>
+            </div>
+        </div>
+    </br>
+        <div class="details">
+            
+            <ul class="labels" id="educdata">Education</ul>
+            
+            <ul class="labels" id="orgdata">Organization</ul>
+            
+            <ul class="labels" id="workdata">Work</ul>
+            
+            <ul class="labels" id="otherdata">Others</br>
+                <img src="https://scontent.fmnl4-1.fna.fbcdn.net/v/t31.0-8/27023921_10156086939064850_4915067375017990576_o.jpg?_nc_cat=104&_nc_sid=13bebb&_nc_eui2=AeFaIFasBIAdXcvWxG02g3zkDbtgq3xUkRQNu2CrfFSRFEd4Czo6_sJGBb0bB-49iSs&_nc_ohc=RThxuoxBE4kAX8r_sE9&_nc_ht=scontent.fmnl4-1.fna&oh=988e7d3730b7d690841a34458cd25606&oe=5F5B035C" width=512 height=340 id="otherpic">
+            </ul>
+            
+        </div>
+        
+    </div>
+    
+
+        <script>
+            // When the user scrolls the page, execute myFunction
+            window.onscroll = function() {myFunction()};
+
+            // Get the header
+            var header = document.getElementById("menudo");
+
+            // Get the offset position of the navbar
+            var sticky = header.offsetTop;
+
+            // Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
+            function myFunction() {
+                if (window.pageYOffset > sticky) {
+                    header.classList.add("sticky");
+                } else {
+                    header.classList.remove("sticky");
+                }
+            }
+        </script>
+                        
+        
+        <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyBg3LufY7u5qxlCm1U7eYmb2liI3sl3aNA",
+            authDomain: "website-resume-7e05b.firebaseapp.com",
+            databaseURL: "https://website-resume-7e05b.firebaseio.com",
+            projectId: "website-resume-7e05b",
+            storageBucket: "website-resume-7e05b.appspot.com",
+            messagingSenderId: "305597315005",
+            appId: "1:305597315005:web:c01d8405f417ce2bb1c4d4"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+            const db = firebase.firestore();
+        </script>
+                
+        <script src="app-js.js"></script>
+    </body>
+</html>

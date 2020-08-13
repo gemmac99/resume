@@ -1,0 +1,151 @@
+<html>
+    <head>
+        <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/7.17.1/firebase-firestore.js"></script>
+        Add Details
+        
+        <style>
+            /*color guide
+        almost black = #0b0c10 / 11, 12, 16
+        blue-ish grey = #1f2833 / 31, 40, 51
+        grey = #c5c6c7 /  197, 198, 199
+        bright teal = #66fcf1  /  102, 252, 241
+        dark teal = #45a29e  /  69, 162, 158
+        */
+            body{
+               background-color:#0b0c10;
+            }
+            .form-container{
+                display:flex;
+                
+                align-items: center;
+                flex-direction: column;
+                background-color: rgba(4, 120, 236, 0.2);
+                color:rgba(102, 252, 241);
+                width: 1000px;
+                margin-left: 500px;
+                margin-top: 100px;
+                font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+          
+            #educ-form{
+                display:flex;
+                flex-direction: column;
+                width: 50%;
+                border: 2px solid rgb(15, 224, 172);
+                background-color: rgba(31, 40, 51);
+                height: 100px;
+                margin-bottom: 30px;
+            }
+            #org-form{
+                display:flex;
+                flex-direction: column;
+                width: 50%; 
+                border: 2px solid rgb(15, 224, 172);
+                background-color: rgba(31, 40, 51);
+                height: 100px;
+                margin-bottom: 30px;
+            }
+            #work-form{
+                display:flex;
+                flex-direction: column;
+                width: 50%; 
+                border: 2px solid rgb(15, 224, 172);
+                background-color: rgba(31, 40, 51);
+                height: 90px;
+                margin-bottom: 30px;
+            }
+           
+            .buttons{
+                background-color:#1f2833;
+                height: 100%;
+                font-weight: 500;
+                font-size:20px;
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                padding-top: .5em;
+                padding-left: 7em;
+                padding-right: 7em;
+                padding-bottom: .5em;
+                border: 2px solid #45a29e;
+                color:rgb(15, 224, 172);
+                float:left;
+                margin-bottom: 20px;
+                
+           }
+           .buttons:hover{
+                color: rgb(15, 224, 172);
+                cursor: pointer;
+                background-color: rgba(11, 12, 16);
+                box-shadow: 0 2px 3px rgba(4, 120, 236, 0.2);
+               
+               
+            }
+            .nounderline{
+                text-decoration: none;
+                color: rgb(15, 224, 172);
+                
+            }
+            .labels{
+            font-size: 60px;
+            
+            padding-bottom: 2em;
+            padding-left: 1.5em;
+            padding-right: 1.5em;
+            padding-top: 1em;
+            background-color: white;
+            }
+        </style>
+    </head>
+    <body>
+        <!--ADD FUNCTION-->
+        <div class="form-container">
+            <h1>Add Education</h1>
+            <form id ="educ-form">
+                <input type="text" name ="eSchool" placeholder="School Name">
+                <input type="text" name ="eDegree" placeholder="Degree">
+                <input type="text" name ="eSchoolend" placeholder="Year Ended">
+                <input type="text" name ="eSchoolstart" placeholder="Year Started">
+
+                <button class="buttons" id="addEducations">Add Education</button>
+            </form>
+            <h1>Add Organization</h1>
+            <form id ="org-form">
+                <input type="text" name ="oname" placeholder="Organization Name">
+                <input type="text" name ="oposition" placeholder="Position">
+                <input type="text" name ="oyrend" placeholder="Year Ended">
+                <input type="text" name ="oyrstart" placeholder="Year Started">
+
+                <button class="buttons" id="addOrganizations">Add Organization</button>
+            </form>
+            <h1>Add Work</h1>
+            <form id ="work-form">
+                <input type="text" name ="wname" placeholder="Project Name">
+                <input type="text" name ="wsubject" placeholder="Subject Name">
+                
+
+                <button class="buttons" id="addWorks">Add Work</button>
+            </form>
+
+            <button class="buttons" id="backto"><a href="index.html" class="nounderline">Back to Resume</a></button>
+      
+        </div>
+        
+        <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyBg3LufY7u5qxlCm1U7eYmb2liI3sl3aNA",
+            authDomain: "website-resume-7e05b.firebaseapp.com",
+            databaseURL: "https://website-resume-7e05b.firebaseio.com",
+            projectId: "website-resume-7e05b",
+            storageBucket: "website-resume-7e05b.appspot.com",
+            messagingSenderId: "305597315005",
+            appId: "1:305597315005:web:c01d8405f417ce2bb1c4d4"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+            const db = firebase.firestore();
+        </script>
+                
+        <script src="app-js.js"></script>
+    </body>
+</html>
